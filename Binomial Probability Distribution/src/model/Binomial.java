@@ -13,7 +13,7 @@ public class Binomial {
     }
     
     public static double[] separatedProbability(int xStart, int xEnd, int n, double p) {
-        double[] probabilities = new double[xEnd - xStart + 1];
+        double[] probabilities = new double[xEnd - xStart];
         int index = 0;
         
         for (int i = xStart; i <= xEnd; i++) {
