@@ -1,5 +1,8 @@
 package view;
 
+import java.awt.Dimension;
+
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -13,35 +16,64 @@ import net.miginfocom.swing.MigLayout;
 public class InputPanel extends JPanel {
     private final int X_UPPER_LIMIT = 100000; // 100,000
     
+    private JLabel xLabel;
+    private JSpinner xLowerSpinner;
+    private JLabel toLabel;
+    private JSpinner xUpperSpinner;
+    private JLabel nLabel;
+    private JSpinner nSpinner;
+    private JLabel pLabel;
+    private JTextField pField;
+    private JSlider pSlider;
+    
     public InputPanel() {
-        setLayout(new MigLayout());
+        setLayout(new MigLayout("", "[][30][30, center][30]"));
         initComponents();
+        addComponents();
     }
     
     private void initComponents() {
-        SpinnerModel spinnerModel =
-                new SpinnerNumberModel(0, //initial value
-                                       0, //min
-                                       X_UPPER_LIMIT, //max
-                                       1);                //step
+                                
+        xLabel = new JLabel("x: ");
+        xLowerSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
+        JComponent field = ((JSpinner.DefaultEditor) xLowerSpinner.getEditor());
+        Dimension prefSize = field.getPreferredSize();
+        prefSize = new Dimension(30, prefSize.height);
+        field.setPreferredSize(prefSize);
+
+        toLabel = new JLabel("to: ");
         
-        JLabel xLabel = new JLabel("x: ");
-        JTextField xLowerField = new JTextField(6);
-        JSpinner xLowerSpinner = new JSpinner(spinnerModel);
-        JLabel toLabel = new JLabel("to: ");
-        JTextField xUpperField = new JTextField(6);
-        JSpinner xUpperSpinner = new JSpinner(spinnerModel);
+        xUpperSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
+        field = ((JSpinner.DefaultEditor) xUpperSpinner.getEditor());
+        prefSize = field.getPreferredSize();
+        prefSize = new Dimension(30, prefSize.height);
+        field.setPreferredSize(prefSize);
         
-        JLabel nLabel = new JLabel("n: ");
-        JTextField nField = new JTextField(6);
-        JSpinner nSpinner = new JSpinner(spinnerModel);
+        nLabel = new JLabel("n: ");
         
-        JLabel pLabel = new JLabel("p: ");
-        JTextField pField = new JTextField(6);
-        JSlider pSlider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 500);        
+        nSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
+        field = ((JSpinner.DefaultEditor) nSpinner.getEditor());
+        prefSize = field.getPreferredSize();
+        prefSize = new Dimension(30, prefSize.height);
+        field.setPreferredSize(prefSize);
+        
+        pLabel = new JLabel("p: ");
+        pField = new JTextField(6);
+        pField.setHorizontalAlignment(JTextField.RIGHT);
+        pSlider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 500);        
     }
     
     private void addComponents() {
+        add(xLabel);
+        add(xLowerSpinner);
+        add(toLabel);
+        add(xUpperSpinner, "wrap");
         
+        add(nLabel);
+        add(nSpinner, "wrap");
+        
+        add(pLabel);
+        add(pField, "span, split");
+        add(pSlider);
     }
 }
