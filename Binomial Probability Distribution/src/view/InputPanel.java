@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import net.miginfocom.swing.MigLayout;
@@ -32,15 +31,15 @@ public class InputPanel extends JPanel {
         addComponents();
     }
     
-    private void initComponents() {
-                                
+    private void initComponents() {                                
+        // x
         xLabel = new JLabel("x: ");
         xLowerSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
         JComponent field = ((JSpinner.DefaultEditor) xLowerSpinner.getEditor());
         Dimension prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
         field.setPreferredSize(prefSize);
-
+        
         toLabel = new JLabel("to: ");
         
         xUpperSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
@@ -49,14 +48,15 @@ public class InputPanel extends JPanel {
         prefSize = new Dimension(30, prefSize.height);
         field.setPreferredSize(prefSize);
         
+        // n
         nLabel = new JLabel("n: ");
-        
         nSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
         field = ((JSpinner.DefaultEditor) nSpinner.getEditor());
         prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
         field.setPreferredSize(prefSize);
         
+        // p
         pLabel = new JLabel("p: ");
         pField = new JTextField(6);
         pField.setHorizontalAlignment(JTextField.RIGHT);
