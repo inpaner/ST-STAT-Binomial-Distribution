@@ -19,7 +19,7 @@ public class Binomial {
         end = xEnd;
         this.n = n;
         this.p = p;
-        double[] probabilities = new double[xEnd - xStart+1];
+        probabilities = new double[xEnd - xStart+1];
         int index = 0;
         
         for (int i = xStart; i <= xEnd; i++) {
@@ -31,7 +31,6 @@ public class Binomial {
     private double solveProbability(int x, int n, double p) {
         return (double) (combination(n, x) * Math.pow(p, x) * Math.pow(1-p, n-x));
     }
-    
     
     public double probability() {
         float summation = 0;
@@ -50,7 +49,7 @@ public class Binomial {
         return ArithmeticUtils.factorial(n) /
                 (ArithmeticUtils.factorial(r) * ArithmeticUtils.factorial(n - r));
     }
-
+    
     public int getStart() {
         return start;
     }
