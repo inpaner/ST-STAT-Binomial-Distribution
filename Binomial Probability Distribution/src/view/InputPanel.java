@@ -16,6 +16,7 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.commons.math3.genetics.NPointCrossover;
 
+import model.Binomial;
 import net.miginfocom.swing.MigLayout;
 
 public class InputPanel extends JPanel {
@@ -93,12 +94,12 @@ public class InputPanel extends JPanel {
         add(updateButton, "span, split, wrap");
         
         add(bLabel);
-        add(bValueLabel);
+        add(bValueLabel, "span, split");
     }
     
-    public void setBValue(String value) {
-        bValueLabel.setText(value);
-    }
+
+    //--------------------------------
+    // Getters and setters
     
     public int getXLower() {
         return (Integer) xLowerSpinner.getValue();
@@ -108,17 +109,43 @@ public class InputPanel extends JPanel {
         return (Integer) xUpperSpinner.getValue();
     }
     
-    public double getP() {
-        return Double.valueOf(pLabel.getText()) / 1000;
-    }
-    
-    public double getN() {
+    public int getN() {
         return (Integer) nSpinner.getValue();
     }
+
+    public double getP() {
+        return Double.valueOf(pField.getText());
+    }
+    
+    public void setBValue(double b) {
+        bValueLabel.setText(Double.toString(b));
+    }
+    
+    public void setXLower(int x) {
+        xLowerSpinner.setValue(x);
+    }
+    
+    public void setXUpper(int x) {
+        System.out.println("HERE in input panel");
+        xUpperSpinner.setValue(x);
+    }
+    
+    public void setN(int x) {
+        nSpinner.setValue(x);
+    }
+    
+    public void setP(double p) {
+        pField.setText(Double.toString(p));
+    }
+    
+    public void setPSlider(double p) {
+        //TODO
+    }
+    
     
     
     //--------------------------------
-    // Listeners
+    // Listener setters
     
     public void addUpdateListener(ActionListener listener) {
         updateButton.addActionListener(listener);
@@ -139,4 +166,5 @@ public class InputPanel extends JPanel {
     public void addpSliderListener(ChangeListener listener) {
         pSlider.addChangeListener(listener);
     }
+
 }
