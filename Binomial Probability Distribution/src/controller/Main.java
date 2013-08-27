@@ -27,9 +27,20 @@ public class Main {
         mainPanel = new MainPanel();
         frame.setPanel(mainPanel);
         inputPanel = mainPanel.getInputPanel();
+        initInputs();
         outputTable = mainPanel.getOutputTable();
         inputPanel.addUpdateListener(update());
         inputPanel.addLowerSpinnerListener(lowerSpinner());
+        inputPanel.addUpperSpinnerListener(upperSpinner());
+        inputPanel.addNSpinnerListener(nSpinner());
+        inputPanel.addPSliderListener(pSlider());
+    }
+    
+    private void initInputs() {
+        inputPanel.setXLower(0);
+        inputPanel.setXUpper(5);
+        inputPanel.setN(10);
+        inputPanel.setP(0.3);
     }
     
     private ActionListener update() {
@@ -37,12 +48,12 @@ public class Main {
 
         @Override
         public void actionPerformed(ActionEvent ev) {
+            inputPanel.setPSlider(inputPanel.getP());
             updateOutputs(inputPanel.getXLower(),
                          inputPanel.getXUpper(),
                          inputPanel.getN(),
                          inputPanel.getP());     
         }
-            
         };
     }
     
@@ -56,7 +67,6 @@ public class Main {
             int n = inputPanel.getN();
             double p = inputPanel.getP();
             
-            System.out.println(xLower + ", " + xUpper + ", " + n + ", " + p );
             if (xLower < 0) {
                 xLower = 0;
             }
@@ -87,18 +97,17 @@ public class Main {
             int n = inputPanel.getN();
             double p = inputPanel.getP();
             
-            System.out.println(xLower + ", " + xUpper + ", " + n + ", " + p );
-            if (xLower < 0) {
-                xLower = 0;
+            if (xUpper > Binomial.MAX_X) {
+                xUpper = Binomial.MAX_X;
             }
             
-            if (xLower >= xUpper) {
-                xUpper = xLower;
+            if (xUpper < xLower) {
+                xLower = xUpper;
                 inputPanel.setXUpper(xUpper);
                 inputPanel.setXLower(xLower);   
             }
             
-            if (xLower >= n) {
+            if (xUpper > n) {
                 n = xUpper;
                 inputPanel.setN(n);
             }
@@ -108,7 +117,45 @@ public class Main {
         };
     }
     
+    private ChangeListener nSpinner() {
+        return new ChangeListener() {
+
+        @Override
+        public void stateChanged(ChangeEvent arg0) {
+            int xLower = inputPanel.getXLower();
+            int xUpper = inputPanel.getXUpper();
+            int n = inputPanel.getN();
+            double p = inputPanel.getP();
+            
+            if (n < xUpper) {
+                xUpper = n;
+                inputPanel.setXUpper(xUpper);
+            }
+            
+            updateOutputs(xLower, xUpper, n, p);
+        }
+        };
+    }
     
+        
+
+    
+    private ChangeListener pSlider() {
+        return new ChangeListener() {
+
+        @Override
+        public void stateChanged(ChangeEvent arg0) {
+            int xLower = inputPanel.getXLower();
+            int xUpper = inputPanel.getXUpper();
+            int n = inputPanel.getN();
+            double p = inputPanel.getPSlider();
+            
+            inputPanel.setP(p);
+            
+            updateOutputs(xLower, xUpper, n, p);
+        }
+        };
+    }
     
     private boolean verifyValues(int xLower, int xUpper, int n, double p) {
         boolean verified = true;
