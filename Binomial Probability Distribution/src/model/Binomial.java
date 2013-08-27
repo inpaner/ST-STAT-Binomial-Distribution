@@ -10,6 +10,8 @@ public class Binomial {
     private int n;
     private double p;
     
+    public static final int MAX_X = 1000;
+    
     public Binomial(int x, int n, double p) {
         this(x, x, n, p);
     }
@@ -29,7 +31,7 @@ public class Binomial {
     }
     
     private double solveProbability(int x, int n, double p) {
-        return (double) (combination(n, x) * Math.pow(p, x) * Math.pow(1-p, n-x));
+        return (double) (ArithmeticUtils.binomialCoefficientDouble(n, x) * Math.pow(p, x) * Math.pow(1-p, n-x));
     }
     
     public double probability() {
@@ -43,11 +45,6 @@ public class Binomial {
     
     public double[] probabilities() {
         return probabilities;
-    }
-
-    private static long combination(int n, int r) {
-        return ArithmeticUtils.factorial(n) /
-                (ArithmeticUtils.factorial(r) * ArithmeticUtils.factorial(n - r));
     }
     
     public int getStart() {
