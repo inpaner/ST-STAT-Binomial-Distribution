@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
         });
         
         setTitle("Binomial Distribution");
-        setSize(800, 600);
+        setSize(600, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
