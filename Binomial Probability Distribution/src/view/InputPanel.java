@@ -20,7 +20,6 @@ import model.Binomial;
 import net.miginfocom.swing.MigLayout;
 
 public class InputPanel extends JPanel {
-    private final int X_UPPER_LIMIT = 100000; // 100,000
     
     private JLabel xLabel;
     private JSpinner xLowerSpinner;
@@ -44,7 +43,7 @@ public class InputPanel extends JPanel {
     private void initComponents() {                                
         // x
         xLabel = new JLabel("x: ");
-        xLowerSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
+        xLowerSpinner = new JSpinner(new SpinnerNumberModel(0, 0, Binomial.MAX_X, 1));
         JComponent field = ((JSpinner.DefaultEditor) xLowerSpinner.getEditor());
         Dimension prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
@@ -52,7 +51,7 @@ public class InputPanel extends JPanel {
         
         toLabel = new JLabel("to: ");
         
-        xUpperSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
+        xUpperSpinner = new JSpinner(new SpinnerNumberModel(0, 0, Binomial.MAX_X, 1));
         field = ((JSpinner.DefaultEditor) xUpperSpinner.getEditor());
         prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
@@ -60,7 +59,7 @@ public class InputPanel extends JPanel {
         
         // n
         nLabel = new JLabel("n: ");
-        nSpinner = new JSpinner(new SpinnerNumberModel(0, 0, X_UPPER_LIMIT, 1));
+        nSpinner = new JSpinner(new SpinnerNumberModel(0, 0, Binomial.MAX_X, 1));
         field = ((JSpinner.DefaultEditor) nSpinner.getEditor());
         prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
@@ -117,6 +116,11 @@ public class InputPanel extends JPanel {
         return Double.valueOf(pField.getText());
     }
     
+    public double getPSlider() {
+        return (Double) (pSlider.getValue() / 1000.0);
+    }
+    
+    
     public void setBValue(double b) {
         bValueLabel.setText(Double.toString(b));
     }
@@ -126,7 +130,6 @@ public class InputPanel extends JPanel {
     }
     
     public void setXUpper(int x) {
-        System.out.println("HERE in input panel");
         xUpperSpinner.setValue(x);
     }
     
@@ -139,7 +142,10 @@ public class InputPanel extends JPanel {
     }
     
     public void setPSlider(double p) {
-        //TODO
+        int value = (int) (p * 1000);
+        System.out.println(value);
+        
+        pSlider.setValue(value);
     }
     
     
@@ -163,7 +169,11 @@ public class InputPanel extends JPanel {
         nSpinner.addChangeListener(listener);
     }
     
-    public void addpSliderListener(ChangeListener listener) {
+    public void addPFieldListener(ActionListener listener) {
+        pField.addActionListener(listener);
+    }
+    
+    public void addPSliderListener(ChangeListener listener) {
         pSlider.addChangeListener(listener);
     }
 
