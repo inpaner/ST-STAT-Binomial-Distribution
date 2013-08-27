@@ -22,8 +22,7 @@ public class MainPanel extends JPanel {
         tabbedPane = new JTabbedPane();
         outputTable = new OutputTable();
         tabbedPane.addTab("Table", outputTable);
-        Binomial binomial = new Binomial(3, 20, 20, 0.3);
-        outputTable.updateData(binomial);
+        
     }
     
     private void addComponents() {
