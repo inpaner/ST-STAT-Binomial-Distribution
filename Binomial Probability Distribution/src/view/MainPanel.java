@@ -10,6 +10,7 @@ public class MainPanel extends JPanel {
     private InputPanel inputPanel;
     private JTabbedPane tabbedPane;
     private OutputTable outputTable;
+    private OutputGraph outputGraph;
     
     public MainPanel() {
         setLayout(new MigLayout());
@@ -21,8 +22,9 @@ public class MainPanel extends JPanel {
         inputPanel = new InputPanel();
         tabbedPane = new JTabbedPane();
         outputTable = new OutputTable();
+        outputGraph = new OutputGraph();
         tabbedPane.addTab("Table", outputTable);
-        
+        tabbedPane.addTab("Graph", outputGraph);
     }
     
     private void addComponents() {
@@ -36,5 +38,9 @@ public class MainPanel extends JPanel {
     
     public OutputTable getOutputTable() {
         return outputTable;
+    }
+    
+    public OutputGraph getOutputGraph() {
+        return outputGraph;
     }
 }

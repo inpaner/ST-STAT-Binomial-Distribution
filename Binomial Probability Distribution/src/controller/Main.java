@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -11,12 +13,14 @@ import model.Binomial;
 import view.InputPanel;
 import view.MainFrame;
 import view.MainPanel;
+import view.OutputGraph;
 import view.OutputTable;
 
 public class Main {
     private MainPanel mainPanel;
     private InputPanel inputPanel;
     private OutputTable outputTable;
+    private OutputGraph outputGraph;
     
     public static void main(String[] args) {
         new Main();
@@ -29,11 +33,15 @@ public class Main {
         inputPanel = mainPanel.getInputPanel();
         initInputs();
         outputTable = mainPanel.getOutputTable();
+        outputGraph = mainPanel.getOutputGraph();
         inputPanel.addUpdateListener(update());
         inputPanel.addLowerSpinnerListener(lowerSpinner());
+        
         inputPanel.addUpperSpinnerListener(upperSpinner());
+        
         inputPanel.addNSpinnerListener(nSpinner());
         inputPanel.addPSliderListener(pSlider());
+        
     }
     
     private void initInputs() {
@@ -71,7 +79,7 @@ public class Main {
                 xLower = 0;
             }
             
-            if (xLower >= xUpper) {
+            if (xLower > xUpper || inputPanel.isSingle()) {
                 xUpper = xLower;
                 inputPanel.setXUpper(xUpper);
                 inputPanel.setXLower(xLower);   
@@ -82,10 +90,13 @@ public class Main {
                 inputPanel.setN(n);
             }
             
+            
             updateOutputs(xLower, xUpper, n, p);
         }
         };
     }
+    
+
     
     private ChangeListener upperSpinner() {
         return new ChangeListener() {
@@ -177,6 +188,7 @@ public class Main {
             Binomial binomial = new Binomial(xLower, xUpper, n, p);
             inputPanel.setBValue(binomial.probability());
             outputTable.updateData(binomial);
+            outputGraph.updateData(binomial);
         }
     }
     

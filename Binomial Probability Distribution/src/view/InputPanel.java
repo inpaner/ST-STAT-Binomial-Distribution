@@ -2,9 +2,12 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.crypto.spec.PSource.PSpecified;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +28,7 @@ public class InputPanel extends JPanel {
     private JSpinner xLowerSpinner;
     private JLabel toLabel;
     private JSpinner xUpperSpinner;
+    private JCheckBox singleCheck;
     private JLabel nLabel;
     private JSpinner nSpinner;
     private JLabel pLabel;
@@ -57,6 +61,10 @@ public class InputPanel extends JPanel {
         prefSize = new Dimension(30, prefSize.height);
         field.setPreferredSize(prefSize);
         
+        // checkbox
+        singleCheck = new JCheckBox("Single X");
+        singleCheck.addItemListener(single());
+        
         // n
         nLabel = new JLabel("n: ");
         nSpinner = new JSpinner(new SpinnerNumberModel(0, 0, Binomial.MAX_X, 1));
@@ -83,6 +91,8 @@ public class InputPanel extends JPanel {
         add(toLabel);
         add(xUpperSpinner, "wrap");
         
+        add(singleCheck, "skip 3, span, split, wrap");
+        
         add(nLabel);
         add(nSpinner, "wrap");
         
@@ -96,6 +106,8 @@ public class InputPanel extends JPanel {
         add(bValueLabel, "span, split");
     }
     
+    
+    
 
     //--------------------------------
     // Getters and setters
@@ -108,10 +120,14 @@ public class InputPanel extends JPanel {
         return (Integer) xUpperSpinner.getValue();
     }
     
+    public boolean isSingle() {
+    	return singleCheck.isSelected();
+    }
+    
     public int getN() {
         return (Integer) nSpinner.getValue();
     }
-
+    
     public double getP() {
         return Double.valueOf(pField.getText());
     }
@@ -148,6 +164,27 @@ public class InputPanel extends JPanel {
         pSlider.setValue(value);
     }
     
+    public void enableSingle() {
+    	xUpperSpinner.setEnabled(false);
+    	setXUpper(getXLower());
+    }
+    
+    public void disableSingle() {
+    	xUpperSpinner.setEnabled(true);
+    }
+    
+    private ItemListener single() {
+    	return new ItemListener() {
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			if (singleCheck.isSelected()) 
+				enableSingle();
+			else
+				disableSingle();
+			
+		}
+		};
+    }
     
     
     //--------------------------------
@@ -163,6 +200,10 @@ public class InputPanel extends JPanel {
     
     public void addUpperSpinnerListener(ChangeListener listener) {
         xUpperSpinner.addChangeListener(listener);
+    }
+    
+    public void addSingleListener(ItemListener listener) {
+    	singleCheck.addItemListener(listener);
     }
     
     public void addNSpinnerListener(ChangeListener listener) {
